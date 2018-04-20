@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Wykres Gantta onclick test</title>
+	<link rel="stylesheet" href="css/wgantt.css">
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<h1>Gantt charts</h1>
+			<!--<button id="test" onclick="testBtn()">Click!</button>-->
+			<div id="addPerson">
+				<input type="text" id="addPersonInput"></input><span id="addPersonBtn" class="btn">Add Person</span>
+			</div>
+			<div id="removePerson">
+				<select id="removePersonSelect"></select><span id="removePersonBtn" class="btn">Remove Person</span>
+			</div>
+			<div id="colorsSelect"></div>
+		</div>
+		
+		<div id="toolBar">
+			<div id="toolBarAddTask"><span id="toolBarAddTaskBtn" class="btn">Edit tasks</span></div>
+			<div id="toolBarTaskSearch"><input id="toolBarTaskSearchInput" placeholder=" &#x2315  Search tasks..."></input></div>
+			<div id="toolBarPrevious"><span id="toolBarPreviousBtn" class="btn">< Prev.</span></div>
+			<div id="toolBarDateRange">
+				<span>Year</span><select  id="selectedYear"></select>
+				<span>Month</span><select id="selectedMonth"></select>
+				<span>Week</span><select id="selectedWeek"></select>
+			</div>
+			<div id="toolBarDateRangeSwitch">
+				<div id="toolBarDateRangeSwitchBtn" class="btn">
+					<span id="toolBarDateRangeSwitch1W" class="toolBarDateRangeSwitchTextBig">1W</span>
+					<span style="position:absolute; left:36px; top: 1px;">|</span>
+					<span id="toolBarDateRangeSwitch4W" class="toolBarDateRangeSwitchTextSmall">4W</span>
+				</div>
+			</div>
+			<div id="toolBarNext"><span id="toolBarNextBtn" class="btn">Next ></span></div>
+			<div id="toolBarDateHeadings"></div>
+		</div>
+		
+		<div id="graphZone">
+			<div id="graphTaskListZone">
+				<ul id="graphTaskListUl" class="ulClear"></ul>
+			</div>
+			<div id="graphGrid"></div>
+		</div>
+	</div>
+<script src="js/wgantt_db.js"></script>	
+<script src="js/wgantt.js"></script>
+</body>
+</html>
