@@ -1,3 +1,4 @@
+let test = "this";
 let colorsLst = [ "Yellow", "Blue", "Gray", "Orange", "Red" ];
 let currentColor = 1;
 
