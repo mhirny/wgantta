@@ -8,6 +8,18 @@ img {
 h1 {
 	text-indent: 10px;
 }
+select {
+	text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+}
 
 #wrapper {
 	user-select: none;
@@ -20,8 +32,8 @@ h1 {
 	left: 50%;
 	margin-left: -461px;
 	font-family: Tahoma, Geneva, sans-serif;
-
 }
+
 /* HEAD */
 #header {
 	position: absolute;
@@ -391,7 +403,9 @@ right: -10px;
 #graphTaskListPersonRemoveTitle {
 	position: absolute;
 	//background-color: blue;
-
+border-bottom: 1px solid;
+//border-right: 2px solid;
+text-align: center;
 	//left: 50%;
 	//margin-left: -460px;
 	width: 210px;
@@ -419,7 +433,8 @@ right: -10px;
 #graphTaskListPersonAddTitle {
 	position: absolute;
 	//background-color: blue;
-
+text-align: center;
+border-bottom: 1px solid;
 	//left: 50%;
 	//margin-left: -460px;
 	width: 210px;

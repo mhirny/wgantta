@@ -24,11 +24,11 @@ function addPerson(){
 	if ( match != null  && match[1]=="" && match[2].length > 0 && match[3].length > 0 && match[5]==""){
 		let firstName = match[ 2 ];
 		let lastName = match[ 3 ];
-		let lastName2nd = match[ 4 ];		
+		let lastNameDoublePart = match[ 4 ];		
 		firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
 		lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
-		if ( lastName2nd > "" ){
-			lastName += "-" + lastName2nd.charAt(1).toUpperCase() + lastName2nd.slice(2).toLowerCase();
+		if ( lastNameDoublePart > "" ){
+			lastName += "-" + lastNameDoublePart.charAt(1).toUpperCase() + lastNameDoublePart.slice(2).toLowerCase();
 		};
 		persons[ "personID_" + persons.nextId ] = {};
 		persons[ "personID_" + persons.nextId ].fname = firstName;
@@ -59,11 +59,11 @@ loadPersonSelect(); // startup load;
 // remove Personel ;; removePersonBtn -delete-> persons{};
 removePersonBtn = document.getElementById("removePersonBtn");
 removePersonBtn.addEventListener("click", function(){
-	for ( i=0; i< Object.keys( task_list ).length; i++ ) {	// removing removed person from assignment;;
+	for ( i=0; i< Object.keys( task_list ).length; i++ ) {	// removing removed person from all task_list.[task_id].assignment;;
 		if ( Object.keys( task_list )[ i ] == "nextId" ) {
 		continue
-		};
-		arr = task_list[ Object.keys( task_list )[ i ] ].assignment;//assignment[ Object.keys( assignment )[ i ] ];
+		}
+		arr = task_list[ Object.keys( task_list )[ i ] ].assignment;
 		IdIndexInArr = arr.indexOf( removePersonSelect.value );
 		if ( IdIndexInArr >= 0 ) {
 			arr.splice( IdIndexInArr, 1 ) ;
@@ -576,48 +576,9 @@ let regEx = /(.*) (.*) (.*)/;
 		newElemUlRemove.appendChild( newElemLi );
 	};
 
-/*		
-	for (let i = 0; i < task_list[ taskID ].assignment.length; i++){
-		//sort;;
-		let newElemLi = document.createElement( "li" );
-			newElemLi.textContent = persons[ task_list[ taskID ].assignment[ i ] ] .fname + " " +persons[ task_list[ taskID ].assignment[ i ] ].lname;
-			newElemLi.classList.add( "graphTaskListPersonRemove_li" );
-		let newELemLiBtn = document.createElement( "span" );
-			newELemLiBtn.textContent = ">";
-			newELemLiBtn.classList.add( "graphTaskListPersonRemoveBtn" );
-			newELemLiBtn.classList.add( "btn" );
-			newELemLiBtn.addEventListener( "click", function( event ){
-				//event.stopImmediatePropagation();
-				event.stopPropagation();
-				task_list[ taskID ].assignment.splice( i, 1);
-				openGraphTaskListPersonZone( btnID, taskID );
-			}, false);
-		newElemLi.appendChild( newELemLiBtn );
-		newElemUlRemove.appendChild( newElemLi );
-	};
-*/
-	newElemRemoveZone.appendChild( newElemUlRemove );
-	newElemZone.appendChild( newElemRemoveZone );
+newElemRemoveZone.appendChild( newElemUlRemove );
+newElemZone.appendChild( newElemRemoveZone );
 
-	
-/*
-let zzz = [];
-for ( let i = 0; i < Object.keys( persons ).length; i++ ) {
-	if ( Object.keys( persons )[ i ] == "nextId" ) { continue; };
-	zzz.push(  persons[ Object.keys( persons )[ i ] ].lname + " " + persons[ Object.keys( persons )[ i ] ].fname + " "+ Object.keys( persons )[ i ] );
-};
-zzz.sort();
-console.log( zzz );
-let personsSorted = {};
-for ( let i = 0; i < zzz.length; i++ ){
-	let regEx = /(.*) (.*) (.*)/;
-	let match = regEx.exec( zzz[ i ] );
-	personsSorted[ match[3] ] = {};
-	personsSorted[ match[3] ].fname = match[2];
-	personsSorted[ match[3] ].lname = match[1];
-};
-console.log(personsSorted);
-*/
 let sortedPersons = [];
 for ( let i = 0; i < Object.keys( persons ).length; i++ ) {
 	if ( Object.keys( persons )[ i ] == "nextId" ) { continue; };
@@ -649,31 +610,6 @@ sortedPersons.sort();
 		};
 	};
 
-
-/*
-	for ( let i = 0; i < Object.keys( persons ).length; i++) {
-		if (  Object.keys( persons )[ i ] == "nextId" ) { continue; };
-		if ( task_list[ taskID ].assignment.includes(  Object.keys(persons)[ i ] ) == false  ) {
-			let newElemLi = document.createElement( "li" );
-				newElemLi.textContent = persons[ Object.keys(persons)[ i ]].fname + " " +persons[Object.keys(persons)[ i ]].lname;
-				newElemLi.classList.add( "graphTaskListPersonAdd_li" );
-			let newELemLiBtn = document.createElement( "span" );
-				newELemLiBtn.textContent = "<";
-				newELemLiBtn.classList.add( "graphTaskListPersonAddBtn" );
-				newELemLiBtn.classList.add( "btn" );
-				newELemLiBtn.addEventListener( "click", function( event ){
-					//event.stopImmediatePropagation();
-					event.stopPropagation();
-					task_list[ taskID ].assignment.push( Object.keys( persons )[ i ] );
-				//	assignment [ taskID ].sort(); sort for future;;
-					openGraphTaskListPersonZone( btnID, taskID );
-				}, false);
-
-			newElemLi.appendChild( newELemLiBtn );		
-			newElemUlAdd.appendChild( newElemLi );
-		};
-	};
-*/
 // finalizing append :: ul -> AddZone -> Zone -> Button
 	newElemAddZone.appendChild( newElemUlAdd );
 	newElemZone.appendChild( newElemAddZone );
@@ -690,12 +626,6 @@ function displayGraphGrid() {
 	document.getElementById( "graphGrid" ).innerHTML = "";
 	let toolBarTaskSearchInput_value = document.getElementById( "toolBarTaskSearchInput" ).value;	
 	let rowMatchingSearch = 0;
-	
-/*	if ( currentColor == "x" ){
-		graphGrid.classList.remove( "pointerCursor" );
-	} else {
-		graphGrid.classList.add( "pointerCursor" );
-	};*/
 	
 	if ( toolBarDateRangeSwitchBtn.value == "1W" ) { // 1W drawing;;
 		for ( let row = 0; row < Object.keys( server[ currentDB_1 ] ).length; row++ ){ // loops task * 7 grid
@@ -743,8 +673,8 @@ let DBlist = [ currentDB_1, currentDB_2, currentDB_3, currentDB_4 ]; // DB list 
 				for ( let DBlistNr = 0; DBlistNr < 4; DBlistNr ++ ) { // over 4 weeks DBs loop;;
 					for ( let col = 0; col < 7; col++ ) { // 7 days of every DB loop;;
 						let rowPos = Object.keys( server[ DBlist[ DBlistNr ] ] )[ row ];
-						let grid = document.createElement("div"); // grid element
-						let bar = document.createElement("div"); // grid bar is grid ele. child
+						let grid = document.createElement("div");
+						let bar = document.createElement("div");
 
 						bar.setAttribute("id","posBar_" + rowPos + "_" + parseInt( col + 7 * DBlistNr ) ); // bar.setup
 						if  ( server[ DBlist[ DBlistNr ] ][rowPos ][col] > 0 ) { bar.className = "bar4W";
@@ -778,138 +708,6 @@ let DBlist = [ currentDB_1, currentDB_2, currentDB_3, currentDB_4 ]; // DB list 
 		
 	} // end of if 4W test;;
 	
-	
-/*	
-	if ( toolBarDateRangeSwitchBtn.value == "4W" ) { // 4W drawing;;
-		for ( let row = 0; row < Object.keys( server[ currentDB_1 ] ).length; row++ ){ // loops task * 28 grid
-			if ( task_list[ Object.keys( server[ currentDB_1 ] )[ row ] ].task_name.toLowerCase().indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
-
-				for ( let col = 0; col < 7; col++ ) {
-					let rowPos = Object.keys( server[ currentDB_1 ] )[ row ]; // rowPos = "zadanie1"
-					let grid = document.createElement("div"); // grid element
-					let bar = document.createElement("div"); // grid bar is grid ele. child
-
-					bar.setAttribute("id","posBar_" + rowPos + "_" + col ); // bar.setup
-					if  ( server[ currentDB_1 ][rowPos ][col] > 0 ) { bar.className = "bar4W";
-						bar.style.backgroundColor = colorsLst[ server[ currentDB_1 ][rowPos ][col] ];
-					}; //bar.setup
-					grid.appendChild( bar ); // adding bar as grid child
-
-					grid.setAttribute("id","pos_" + rowPos + "_" + col ); //grid.setup.start
-					grid.className = "grid4W";
-					grid.style.left = col * gridWidth + "px";
-					grid.style.top = rowMatchingSearch * gridHeight + "px"; //grid.setup.end;;
-
-					grid.addEventListener("click", function (){ // grid listener to manipulate bar.child
-						if ( currentColor == "x" ) { //skip
-						} else if ( currentColor == 0 ) { // when selected color is 0 == clear
-							server[ currentDB_1 ][rowPos ][col] = 0;
-							document.getElementById("posBar_" + rowPos + "_" + col).className = "";
-						} else { // when selected color isn't 0==Clear or x==StopEdit;;
-							server[ currentDB_1 ][rowPos ][col] = currentColor;
-							document.getElementById("posBar_" + rowPos + "_" + col).className = "bar4W";
-							document.getElementById("posBar_" + rowPos + "_" + col).style.backgroundColor = colorsLst[ currentColor ];
-						}
-						displayGraphGrid();
-					});
-				graphGrid.appendChild( grid ); // adding grid>bar to graph zone
-				}
-				for ( let col = 0; col < 7; col++ ) {
-					let rowPos = Object.keys( server[ currentDB_2 ] )[ row ]; // rowPos = "zadanie1"
-					let grid = document.createElement("div"); // grid element
-					let bar = document.createElement("div"); // grid bar is grid ele. child
-
-					bar.setAttribute("id","posBar_" + rowPos + "_" + parseInt( col +7 ) ); // bar.setup
-					if  ( server[ currentDB_2 ][rowPos ][col] > 0 ) { bar.className = "bar4W";
-						bar.style.backgroundColor = colorsLst[ server[ currentDB_2 ][rowPos ][col] ];
-					}; //bar.setup
-					grid.appendChild( bar ); // adding bar as grid child
-
-					grid.setAttribute("id","pos_" + rowPos + "_" + parseInt( col +7 ) ); //grid.setup.start
-					grid.className = "grid4W";
-					grid.style.left = gridWidth * 7 + col * gridWidth + "px";
-					grid.style.top = rowMatchingSearch * gridHeight + "px"; //grid.setup.end;;
-
-					grid.addEventListener("click", function (){ // grid listener to manipulate bar.child
-						if ( currentColor == "x" ) { //skip
-						} else if ( currentColor == 0 ) { // when selected color is 0 == clear
-							server[ currentDB_2 ][rowPos ][col] = 0;
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +7 )).className = "";
-						} else { // when selected color isn't 0==Clear or x==StopEdit;;
-							server[ currentDB_2 ][rowPos ][col] = currentColor;
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +7 ) ).className = "bar4W";
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +7 ) ).style.backgroundColor = colorsLst[ currentColor ];
-						}
-						displayGraphGrid();
-					});
-				graphGrid.appendChild( grid ); // adding grid>bar to graph zone
-				}			
-				for ( let col = 0; col < 7; col++ ) {
-					let rowPos = Object.keys( server[ currentDB_3 ] )[ row ]; // rowPos = "zadanie1"
-					let grid = document.createElement("div"); // grid element
-					let bar = document.createElement("div"); // grid bar is grid ele. child
-
-					bar.setAttribute("id","posBar_" + rowPos + "_" + parseInt( col +14 ) ); // bar.setup
-					if  ( server[ currentDB_3 ][rowPos ][col] > 0 ) { bar.className = "bar4W";
-						bar.style.backgroundColor = colorsLst[ server[ currentDB_3 ][rowPos ][col] ];
-					}; //bar.setup
-					grid.appendChild( bar ); // adding bar as grid child
-
-					grid.setAttribute("id","pos_" + rowPos + "_" + parseInt( col +14 ) ); //grid.setup.start
-					grid.className = "grid4W";
-					grid.style.left = gridWidth * 14 + col * gridWidth + "px";
-					grid.style.top = rowMatchingSearch * gridHeight + "px"; //grid.setup.end;;
-
-					grid.addEventListener("click", function (){ // grid listener to manipulate bar.child
-						if ( currentColor == "x" ) { //skip
-						} else if ( currentColor == 0 ) { // when selected color is 0 == clear
-							server[ currentDB_3 ][rowPos ][col] = 0;
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +14 )).className = "";
-						} else { // when selected color isn't 0==Clear or x==StopEdit;;
-							server[ currentDB_3 ][rowPos ][col] = currentColor;
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +14 )).className = "bar4W";
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +14 )).style.backgroundColor = colorsLst[ currentColor ];
-						}
-						displayGraphGrid();
-					});
-				graphGrid.appendChild( grid ); // adding grid>bar to graph zone
-				}			
-				for ( let col = 0; col < 7; col++ ) {
-					let rowPos = Object.keys( server[ currentDB_4 ] )[ row ]; // rowPos = "zadanie1"
-					let grid = document.createElement("div"); // grid element
-					let bar = document.createElement("div"); // grid bar is grid ele. child
-
-					bar.setAttribute("id","posBar_" + rowPos + "_" + parseInt( col +21 ) ); // bar.setup
-					if  ( server[ currentDB_4 ][rowPos ][col] > 0 ) { bar.className = "bar4W";
-						bar.style.backgroundColor = colorsLst[ server[ currentDB_4 ][rowPos ][col] ];
-					}; //bar.setup
-					grid.appendChild( bar ); // adding bar as grid child
-
-					grid.setAttribute("id","pos_" + rowPos + "_" + parseInt( col +21 ) ); //grid.setup.start
-					grid.className = "grid4W";
-					grid.style.left = gridWidth * 21 + col * gridWidth + "px";
-					grid.style.top = rowMatchingSearch * gridHeight + "px"; //grid.setup.end;;
-
-					grid.addEventListener("click", function (){ // grid listener to manipulate bar.child
-						if ( currentColor == "x" ) { //skip
-						} else if ( currentColor == 0 ) { // when selected color is 0 == clear
-							server[ currentDB_4 ][rowPos ][col] = 0;
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +21 )).className = "";
-						} else { // when selected color isn't 0==Clear or x==StopEdit;;
-							server[ currentDB_4 ][rowPos ][col] = currentColor;
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +21 )).className = "bar4W";
-							document.getElementById("posBar_" + rowPos + "_" + parseInt( col +21 )).style.backgroundColor = colorsLst[ currentColor ];
-						}
-						displayGraphGrid();
-					});
-				graphGrid.appendChild( grid ); // adding grid>bar to graph zone
-				}			
-				
-			rowMatchingSearch ++;
-			}
-		}
-	} //end 4W if;;
-*/
 }
 //on start displayGraphGrid;;
 displayGraphGrid();
