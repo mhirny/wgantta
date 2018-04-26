@@ -28,7 +28,7 @@ function addPerson(){
 	if ( match != null  && match[1]=="" && match[2].length > 0 && match[3].length > 0 && match[5]==""){
 		let firstName = match[ 2 ];
 		let lastName = match[ 3 ];
-		let lastNameDoublePart = match[ 4 ];		
+		let lastNameDoublePart = match[ 4 ];
 		firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
 		lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
 		if ( lastNameDoublePart > "" ){
@@ -48,7 +48,7 @@ function addPerson(){
 let removePersonSelect = document.getElementById( "removePersonSelect" );
 function loadPersonSelect(){
 	removePersonSelect.innerHTML = ""; // clearing select before appending new content;
-	for ( let i=0; i < Object.keys( persons ).length; i++ ) {
+	for ( let i = 0, j = Object.keys( persons ).length; i < j; i++ ) {
 		if ( Object.keys( persons )[ i ] == "nextId" ){ continue; };
 		let newElem = document.createElement("option");
 		let id = Object.keys( persons )[ i ]; // persons ID;
@@ -63,14 +63,14 @@ loadPersonSelect(); // startup load;
 // remove Personel ;; removePersonBtn -delete-> persons{};
 removePersonBtn = document.getElementById("removePersonBtn");
 removePersonBtn.addEventListener("click", function(){
-	for ( i=0; i< Object.keys( task_list ).length; i++ ) {	// removing removed person from all task_list.[task_id].assignment;;
+	for ( i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {	// removing removed person from all task_list.[task_id].assignment;;
 		if ( Object.keys( task_list )[ i ] == "nextId" ) {
 		continue
 		}
 		arr = task_list[ Object.keys( task_list )[ i ] ].assignment;
 		IdIndexInArr = arr.indexOf( removePersonSelect.value );
 		if ( IdIndexInArr >= 0 ) {
-			arr.splice( IdIndexInArr, 1 ) ;
+			arr.splice( IdIndexInArr, 1 );
 		}
 	}
 	delete persons[ removePersonSelect.value ];
@@ -90,7 +90,7 @@ function displayColorsSelect(){
 	newElemImgDel.setAttribute( "src", "img/TrashBinT.png" );
 	newElemDel.appendChild( newElemImgDel );
 	newElemDel.addEventListener( "click", function() {
-		document.getElementById( "colorS" + currentColor).classList.remove( "colorsBtnSelected" );
+		document.getElementById( `colorS${currentColor}` ).classList.remove( "colorsBtnSelected" );
 		newElemDel.classList.add( "colorsBtnSelected" );
 		graphGrid.classList.add( "pointerCursor" );
 		currentColor = 0;
@@ -101,10 +101,10 @@ function displayColorsSelect(){
 	}
 	colorsSelect.appendChild( newElemDel );
 
-	for (let i=1; i < colorsLst.length; i++) { // Standard colors;;
+	for ( let i = 1, j = colorsLst.length; i < j; i++ ) { // Standard colors;;
 		let newElem = document.createElement( "div" );
 		newElem.className = "colorsBtn";
-		newElem.setAttribute( "id", "colorS" + i );
+		newElem.setAttribute( "id", `colorS${i}` );
 		newElem.style.left = ( i * 40 + 20 ) +"px";
 		newElem.style.backgroundColor = colorsLst[ i ];
 		newElem.addEventListener( "click", function(){
@@ -130,7 +130,7 @@ function displayColorsSelect(){
 	newElemImgStop.setAttribute( "src", "img/StopEditT.png" );
 	newElemStop.appendChild( newElemImgStop );
 	newElemStop.addEventListener( "click", function(){
-		document.getElementById( "colorS" + currentColor).classList.remove( "colorsBtnSelected" );
+		document.getElementById( `colorS${currentColor}`).classList.remove( "colorsBtnSelected" );
 		newElemStop.classList.add( "colorsBtnSelected" );
 		graphGrid.classList.remove( "pointerCursor" );
 		currentColor = "x";
@@ -192,7 +192,7 @@ toolBarDateRangeSwitchBtn.addEventListener( "click", function (){
 let toolBarPreviousBtn = document.getElementById("toolBarPreviousBtn");
 toolBarPreviousBtn.addEventListener( "click", function () {
 	if ( selectedWeek.value == 1 ) {
-		for ( i = 0; i < selectedYear.options.length; i++ ) {
+		for ( i = 0, j = selectedYear.options.length; i < j; i++ ) {
 			if ( selectedYear.options[ i ].value ==  selectedYear.value - 1 ) {
 				selectedYear.value = selectedYear.value -1;
 				selectedMonth.value = 11;
@@ -211,7 +211,7 @@ toolBarPreviousBtn.addEventListener( "click", function () {
 let toolBarNextBtn = document.getElementById("toolBarNextBtn");
 	toolBarNextBtn.addEventListener( "click", function () {
 		if ( parseInt(selectedWeek.value) ==  parseInt(selectedWeek.lastChild.value) ) { 
-			for ( i = 0; i < selectedYear.options.length; i++ ) {
+			for ( i = 0, j = selectedYear.options.length; i < j; i++ ) {
 				if ( selectedYear.options[ i ].value ==  parseInt(selectedYear.value) + 1 ) {
 					selectedYear.value = parseInt(selectedYear.value) + 1;
 					selectedWeek.value = 1;
@@ -359,14 +359,15 @@ function displayToolBarDateHeadings() {
 				} else {
 					thisYearFirstWeekDay.setDate( yearFromSelect.getDate() + 8 - firstDayOYear );
 				}
-				let dateFromSelect = new Date(  thisYearFirstWeekDay.getFullYear(), thisYearFirstWeekDay.getMonth(), ( thisYearFirstWeekDay.getDate() + 7 * selectedWeek.value - 7 + i )  );
+				let dateFromSelect = new Date(  thisYearFirstWeekDay.getFullYear(), thisYearFirstWeekDay.getMonth(),
+						( thisYearFirstWeekDay.getDate() + 7 * selectedWeek.value - 7 + i )  );
 			
 			let headMonth = parseInt(dateFromSelect.getMonth() +1);
 			let headDay =  dateFromSelect.getDate();
-				if ( headMonth < 10 ) { headMonth = "0" + headMonth };
-				if ( headDay <10 ) { headDay = "0" + headDay };
+				if ( headMonth < 10 ) { headMonth = `0${headMonth}` };
+				if ( headDay <10 ) { headDay = `0${headDay}` };
 			//newElemDiv.innerHTML = parseInt(dateFromSelect.getMonth() +1) + " / " + dateFromSelect.getDate();
-			newElemDiv.textContent = headDay + " / " + headMonth;
+			newElemDiv.textContent = `${headDay} / ${headMonth}`;
 			docfrag.appendChild( newElemDiv );
 			
 		};
@@ -385,10 +386,11 @@ function displayToolBarDateHeadings() {
 				} else {
 					thisYearFirstWeekDay.setDate( yearFromSelect.getDate() + 8 - firstDayOYear );
 				}
-				let dateFromSelect = new Date(  thisYearFirstWeekDay.getFullYear(), thisYearFirstWeekDay.getMonth(), ( thisYearFirstWeekDay.getDate() + 7 * selectedWeek.value - 7 + i )  );
+				let dateFromSelect = new Date(  thisYearFirstWeekDay.getFullYear(), thisYearFirstWeekDay.getMonth(),
+						( thisYearFirstWeekDay.getDate() + 7 * selectedWeek.value - 7 + i )  );
 			
 			let headDay =  dateFromSelect.getDate();
-				if ( headDay <10 ) { headDay = "0" + headDay };
+				if ( headDay <10 ) { headDay = `0${headDay}` };
 			newElemDiv.textContent = headDay;
 			docfrag.appendChild( newElemDiv );
 			
@@ -408,7 +410,7 @@ function displayGraphTaskListUl(){
 	//graphTaskListUl.innerHTML = "";
 	if ( toolBarAddTaskBtn.textContent == "Edit tasks" ) {
 		let toolBarTaskSearchInput_value = document.getElementById( "toolBarTaskSearchInput" ).value;
-		for (let i=0; i < Object.keys( server[ currentDB.db1 ] ).length; i++) {
+		for ( let i = 0, j = Object.keys( server[ currentDB.db1 ] ).length; i < j; i++) {
 			
 			if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name.toLowerCase().indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
 				let btnID = Object.keys( server[ currentDB.db1 ] )[ i ] + "_btn";
@@ -422,7 +424,7 @@ function displayGraphTaskListUl(){
 						} else{
 							displayGraphTaskListUl();
 							openGraphTaskListPersonZone( btnID, Object.keys( server[ currentDB.db1 ] )[ i ] );
-						}					
+						}
 					});
 					
 				let newElemTaskListAnchor = document.createElement( "span" );
@@ -431,10 +433,10 @@ function displayGraphTaskListUl(){
 					
 				let newElemTaskList_li = document.createElement( "li" );
 					newElemTaskList_li.className = "graphTaskList_li";
-					newElemTaskList_li.setAttribute( "id", "posList_" + Object.keys( server[ currentDB.db1 ] )[ i ] );
+					newElemTaskList_li.setAttribute( "id", `posList_${Object.keys( server[ currentDB.db1 ] )[ i ]}` );
 					newElemTaskList_li.textContent = task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name;
 				newElemTaskList_li.appendChild( newElemTaskListBtn );
-				newElemTaskList_li.appendChild( newElemTaskListAnchor );					
+				newElemTaskList_li.appendChild( newElemTaskListAnchor );
 				docfrag.appendChild( newElemTaskList_li );
 			}
 		}
@@ -442,18 +444,19 @@ function displayGraphTaskListUl(){
 	}
 	if ( toolBarAddTaskBtn.textContent == "Close edit" ) {
 		let toolBarTaskSearchInput_value = document.getElementById( "toolBarTaskSearchInput" ).value;
-		for (let i=0; i < Object.keys( server[ currentDB.db1 ] ).length; i++) {
+		for ( let i = 0, j = Object.keys( server[ currentDB.db1 ] ).length; i < j; i++) {
 			if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name.toLowerCase().indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
 				let btnID = Object.keys( server[ currentDB.db1 ] )[ i ] + "_btn";
 				let newElemTaskListBtn = document.createElement( "span" );
 					newElemTaskListBtn.classList.add( "graphTaskListBtn", "btn" );
 					newElemTaskListBtn.setAttribute( "id", btnID );
 					newElemTaskListBtn.textContent = "DEL";
+					newElemTaskListBtn.style.backgroundColor = 'red';
 					newElemTaskListBtn.addEventListener("click", function( event ) {
 
 						//make delete on whole DB && task_list;; #delDB
 							let taskIdToDelete = Object.keys( server[ currentDB.db1 ] )[ i ] ;
-							for ( let i = 0; i < Object.keys( server ).length; i++ ) {
+							for ( let i = 0, j = Object.keys( server ).length; i < j; i++ ) {
 									delete server[  Object.keys( server )[ i ] ][ taskIdToDelete ];
 								}
 							delete task_list[ taskIdToDelete ];
@@ -462,7 +465,8 @@ function displayGraphTaskListUl(){
 					});
 				let newElemTaskList_li = document.createElement( "li" );
 					newElemTaskList_li.className = "graphTaskList_li";
-					newElemTaskList_li.setAttribute( "id", "posList_" + Object.keys( server[ currentDB.db1 ] )[ i ] );
+					newElemTaskList_li.style.backgroundColor = '#f1f1f1';
+					newElemTaskList_li.setAttribute( "id", `posList_${Object.keys( server[ currentDB.db1 ] )[ i ]}` );
 					let newElemTaskList_li_input = document.createElement( "input" );
 						newElemTaskList_li_input.value = task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name;
 						newElemTaskList_li_input.className = "graphTaskList_li_input";
@@ -479,18 +483,19 @@ function displayGraphTaskListUl(){
 	//add New Task;;
 	//let newElemTaskList_li_new = document.createElement( "" );
 
-				let btnID = "taskID_" + task_list.nextId + "_btn";
+				let btnID = `taskID_${task_list.nextId}_btn`;
 				let newElemTaskListBtn = document.createElement( "span" );
 					newElemTaskListBtn.classList.add( "graphTaskListBtn", "btn" );
 					newElemTaskListBtn.setAttribute( "id", btnID );
 					newElemTaskListBtn.textContent = "ADD";
+					newElemTaskListBtn.style.backgroundColor = 'lightgreen';
 					newElemTaskListBtn.addEventListener("click", function( event ) {
 						let isNameProper = "yes";
 						if ( newElemTaskList_li_input.value == "" ) {
 							isNameProper = "no";
 							alert("Task must have name")
 						} else {
-							for ( let i = 0; i < Object.keys( task_list ).length; i++ ) {
+							for ( let i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {
 								if ( task_list[ Object.keys( task_list )[ i ]].task_name == newElemTaskList_li_input.value ) {
 									alert( "Task name already exist" );
 									isNameProper = "no";
@@ -498,12 +503,12 @@ function displayGraphTaskListUl(){
 								}
 							}
 						}
-						if ( isNameProper == "yes" ) {						
+						if ( isNameProper == "yes" ) {
 							//make add on whole DB;; #addDB
 							task_list[ "taskID_" + task_list.nextId ] = {};
 							task_list[ "taskID_" + task_list.nextId ].task_name = newElemTaskList_li_input.value;
 							task_list[ "taskID_" + task_list.nextId ].assignment = [];
-							for ( let i = 0; i < Object.keys( server ).length; i++ ) {
+							for ( let i = 0, j = Object.keys( server ).length; i < j; i++ ) {
 								server[ Object.keys( server )[ i ] ][ "taskID_" + task_list.nextId ] = [0, 0, 0, 0, 0, 0, 0];
 							}
 							task_list.nextId ++;
@@ -514,6 +519,7 @@ function displayGraphTaskListUl(){
 				let newElemTaskList_li = document.createElement( "li" );
 					newElemTaskList_li.className = "graphTaskList_li";
 					newElemTaskList_li.setAttribute( "id", "posList_taskID_" + task_list.nextId );
+					newElemTaskList_li.style.backgroundColor = '#f1f1f1';
 					let newElemTaskList_li_input = document.createElement( "input" );
 						newElemTaskList_li_input.className = "graphTaskList_li_input";
 						
@@ -553,16 +559,17 @@ function openGraphTaskListPersonZone( btnID, taskID ) {
 		newElemUlAdd.setAttribute( "id", "PersonAdd_ul" );	
 
 let sortedTask_listAssignment = [];
-for ( let i = 0; i < task_list[ taskID ].assignment.length; i++ ) {
-	sortedTask_listAssignment.push(  persons[ task_list[ taskID ].assignment[ i ] ] .lname + " " +persons[ task_list[ taskID ].assignment[ i ] ].fname + " " + task_list[ taskID ].assignment[ i ] );
-};
+for ( let i = 0, j = task_list[ taskID ].assignment.length; i < j; i++ ) {
+	let personID =  task_list[ taskID ].assignment[ i ];
+	sortedTask_listAssignment.push( `${persons[ personID ].lname} ${persons[ personID ].fname} ${personID}` );
+}
 sortedTask_listAssignment.sort();
 let regEx = /(.*) (.*) (.*)/;
-	for (let i = 0; i < task_list[ taskID ].assignment.length; i++){
+	for ( let i = 0, j = task_list[ taskID ].assignment.length; i < j; i++ ){
 		let match = regEx.exec( sortedTask_listAssignment[ i ] );
 		
 		let newElemLi = document.createElement( "li" );
-			newElemLi.textContent = match[2] + " " +match[1];
+			newElemLi.textContent = `${match[2]} ${match[1]}`;
 			newElemLi.classList.add( "graphTaskListPersonRemove_li" );
 		let newELemLiBtn = document.createElement( "span" );
 			newELemLiBtn.textContent = ">";
@@ -583,18 +590,19 @@ newElemRemoveZone.appendChild( newElemUlRemove );
 newElemZone.appendChild( newElemRemoveZone );
 
 let sortedPersons = [];
-for ( let i = 0; i < Object.keys( persons ).length; i++ ) {
+for ( let i = 0, j = Object.keys( persons ).length; i < j; i++ ) {
 	if ( Object.keys( persons )[ i ] == "nextId" ) { continue; };
-	sortedPersons.push(  persons[ Object.keys( persons )[ i ] ].lname + " " + persons[ Object.keys( persons )[ i ] ].fname + " "+ Object.keys( persons )[ i ] );
+	let personID = Object.keys( persons )[ i ];
+	sortedPersons.push( `${persons[ personID ].lname} ${persons[ personID ].fname} ${personID}` );
 }
 sortedPersons.sort();
 //	let regEx = /(.*) (.*) (.*)/;
-	for ( let i = 0; i < sortedPersons.length; i++) {
+	for ( let i = 0, j = sortedPersons.length; i < j; i++) {
 		let match = regEx.exec( sortedPersons[ i ] );
 		if (  match[3]  == "nextId" ) { continue; };
 		if ( task_list[ taskID ].assignment.includes(  match[3] ) == false  ) {
 			let newElemLi = document.createElement( "li" );
-				newElemLi.textContent = match[2] + " " +match[1];
+				newElemLi.textContent = `${match[2]} ${match[1]}`;
 				newElemLi.classList.add( "graphTaskListPersonAdd_li" );
 			let newELemLiBtn = document.createElement( "span" );
 				newELemLiBtn.textContent = "<";
@@ -608,7 +616,7 @@ sortedPersons.sort();
 					openGraphTaskListPersonZone( btnID, taskID );
 				}, false);
 
-			newElemLi.appendChild( newELemLiBtn );		
+			newElemLi.appendChild( newELemLiBtn );
 			newElemUlAdd.appendChild( newElemLi );
 		};
 	};
@@ -631,7 +639,7 @@ function displayGraphGrid() {
 	let rowMatchingSearch = 0;
 	
 	if ( toolBarDateRangeSwitchBtn.value == "1W" ) { // 1W drawing;;
-		for ( let row = 0; row < Object.keys( server[ currentDB.db1 ] ).length; row++ ){ // loops task * 7 grid
+		for ( let row = 0, i = Object.keys( server[ currentDB.db1 ] ).length; row < i; row++ ){ // loops task * 7 grid
 			if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ row ] ].task_name.toLowerCase().indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
 
 				for ( let col = 0; col < 7; col++ ) {
@@ -639,13 +647,13 @@ function displayGraphGrid() {
 					let grid = document.createElement("div"); // grid element
 					let bar = document.createElement("div"); // grid bar is grid ele. child
 
-					bar.setAttribute("id","posBar_" + rowPos + "_" + col ); // bar.setup
+					bar.setAttribute("id",`posBar_${rowPos}_${col}` ); // bar.setup
 					if  ( server[ currentDB.db1 ][rowPos ][col] > 0 ) { bar.className = "bar1W";
 						bar.style.backgroundColor = colorsLst[ server[ currentDB.db1 ][rowPos ][col] ];
 					}; //bar.setup
 					grid.appendChild( bar ); // adding bar as grid child
 
-					grid.setAttribute("id","pos_" + rowPos + "_" + col ); //grid.setup.start
+					grid.setAttribute('id',`pos_${rowPos}_${col}` ); //grid.setup.start
 					grid.className = "grid1W";
 					grid.style.left = col * gridWidth + "px";
 					grid.style.top = rowMatchingSearch * gridHeight + "px"; //grid.setup.end;;
@@ -654,11 +662,11 @@ function displayGraphGrid() {
 						if ( currentColor == "x" ) { //skip
 						} else if ( currentColor == 0 ) { // when selected color is 0 == clear
 							server[ currentDB.db1 ][rowPos ][col] = 0;
-							document.getElementById("posBar_" + rowPos + "_" + col).className = "";
+							document.getElementById(`posBar_${rowPos}_${col}`).className = "";
 						} else { // when selected color isn't 0==Clear or x==StopEdit;;
 							server[ currentDB.db1 ][rowPos ][col] = currentColor;
-							document.getElementById("posBar_" + rowPos + "_" + col).className = "bar1W";
-							document.getElementById("posBar_" + rowPos + "_" + col).style.backgroundColor = colorsLst[ currentColor ];
+							document.getElementById(`posBar_${rowPos}_${col}`).className = "bar1W";
+							document.getElementById(`posBar_${rowPos}_${col}`).style.backgroundColor = colorsLst[ currentColor ];
 						}
 						//displayGraphGrid();
 					});
@@ -671,7 +679,7 @@ function displayGraphGrid() {
 /* 4W loop: for every 'task_list{taskID{task_name} }', loop for every week database (x4) 'curentDB{DBname}',
   and loop 7 days in each week (display grid+bar) + color from 'server{DBname{taskID[for_day_color_number]} }; */
 	if ( toolBarDateRangeSwitchBtn.value == "4W" ) {
-		for ( let row = 0; row < Object.keys( server[ currentDB.db1 ] ).length; row++ ){ // loop on task names;;
+		for ( let row = 0, i = Object.keys( server[ currentDB.db1 ] ).length; row < i; row++ ){ // loop on task names;;
 			if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ row ] ].task_name.toLowerCase().indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
 				for ( let DBnbr = 1; DBnbr <= 4; DBnbr ++ ) { // loop over 4 weeks; currentDB{} names;;
 					if ( currentDB[ `db${DBnbr}` ] == 'ignore' ) { continue };
@@ -680,13 +688,13 @@ function displayGraphGrid() {
 						let grid = document.createElement("div");
 						let bar = document.createElement("div");
 
-						bar.setAttribute("id","posBar_" + rowPos + "_" + parseInt( col + 7 * (DBnbr -1) ) );
+						bar.setAttribute("id",`posBar_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}` );
 						if  ( server[ currentDB[ `db${DBnbr}` ] ][rowPos ][col] > 0 ) { bar.className = "bar4W";
 							bar.style.backgroundColor = colorsLst[ server[ currentDB[ `db${DBnbr}` ] ][rowPos ][col] ];
 						};
 						grid.appendChild( bar );
 
-						grid.setAttribute("id","pos_" + rowPos + "_" + parseInt( col + 7 * (DBnbr -1) ) );
+						grid.setAttribute("id",`pos_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}` );
 						grid.className = "grid4W";
 						grid.style.left = gridWidth * 7 * (DBnbr - 1) + col * gridWidth + "px";
 						grid.style.top = rowMatchingSearch * gridHeight + "px";
@@ -695,11 +703,11 @@ function displayGraphGrid() {
 							if ( currentColor == "x" ) { // if selected color is x == ignore color changes input == skip
 							} else if ( currentColor == 0 ) { // when selected color is 0 == clear / delete
 								server[ currentDB[ `db${DBnbr}` ] ][rowPos ][col] = 0;
-								document.getElementById("posBar_" + rowPos + "_" + parseInt( col + 7 * (DBnbr -1) )).className = "";
+								document.getElementById(`posBar_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}`).className = "";
 							} else { // when selected color isn't 0 == Clear or x == StopEdit;; == change color;;
 								server[ currentDB[ `db${DBnbr}` ] ][rowPos ][col] = currentColor;
-								document.getElementById("posBar_" + rowPos + "_" + parseInt( col + 7 * (DBnbr -1) )).className = "bar4W";
-								document.getElementById("posBar_" + rowPos + "_" + parseInt( col + 7 * (DBnbr -1) )).style.backgroundColor = colorsLst[ currentColor ];
+								document.getElementById(`posBar_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}`).className = "bar4W";
+								document.getElementById(`posBar_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}`).style.backgroundColor = colorsLst[ currentColor ];
 							}
 							displayGraphGrid();
 						}); // end listener
@@ -709,26 +717,26 @@ function displayGraphGrid() {
 			rowMatchingSearch ++;
 			} // end search check loop
 		} // end task names loop
-		
+
 	} // end of if 4W test;;
-	
+
 }
 //on start displayGraphGrid;;
 displayGraphGrid();
 
 // GLOBALS;;
 // changing Data Base + if DB don't exist create empty one;;
-//DB naming convention: server. + "wgantt" + year + "w" + week_number :: server.wgant2018w36;;
+// DB naming convention: server."wgantt" + year + "w" + week_number :: server.wgant2018w36;;
 function changeDB() {
-	currentDB.db1 = "wgantt" + selectedYear.value + "w" + selectedWeek.value;
+	currentDB.db1 = `wgantt${selectedYear.value}w${selectedWeek.value}`;
 	if ( !server[ currentDB.db1 ] ) {
 		server[ currentDB.db1 ] = {};
-		for ( let i = 0; i < Object.keys( task_list ).length; i++ ) {
+		for ( let i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {
 			if ( Object.keys( task_list)[ i ] == "nextId" ) { continue };
 			server[ currentDB.db1 ][ Object.keys( task_list)[ i ] ] = [0, 0, 0, 0, 0, 0, 0];
 		};
 	};
-	
+
 		if ( toolBarDateRangeSwitchBtn.value == "4W" ) {
 			let sWeekValue = parseInt(selectedWeek.value);
 			let sWeekLastChildValue = parseInt(selectedWeek.lastChild.value);
@@ -736,41 +744,37 @@ function changeDB() {
 			for ( let i = 1; i < 4; i++ ) {
 				if ( sWeekValue + i <= sWeekLastChildValue ){
 					currentDB[ `db${i + 1}` ] = `wgantt${selectedYear.value}w${sWeekValue + i}`;
-					//eval( "currentDB_" + parseInt( i + 1 ) + " = 'wgantt" + selectedYear.value + "w" + parseInt( parseInt(selectedWeek.value) + i) +"'");
 				} else if ( sWeekValue + i > sWeekLastChildValue &&
 				selectedYear.value < parseInt(selectedYear.lastChild.value)){
 					currentDB[ `db${i + 1}`] = `wgantt${parseInt(selectedYear.value) + 1}w${i - difference}`;
-					//eval( "currentDB_" + parseInt( i + 1 ) + " = 'wgantt" + parseInt( parseInt(selectedYear.value) + 1) + "w" +
-					//		 parseInt(parseInt(selectedWeek.value) +i -1  - parseInt(selectedWeek.value)) + "'" );
 				} else {
 					currentDB[ `db${i + 1}` ] = 'ignore';
-					//eval( "currentDB_" + parseInt( i + 1 ) + " = 'ignore'" );
 				};
 			}
 
 		if ( !server[ currentDB.db2 ] && currentDB.db2 != "ignore" ) {
 			server[ currentDB.db2 ] = {};
-			for ( let i = 0; i < Object.keys( task_list ).length; i++ ) {
+			for ( let i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {
 				if ( Object.keys( task_list)[ i ] == "nextId" ) { continue };
 				server[ currentDB.db2 ][ Object.keys( task_list)[ i ] ] = [0, 0, 0, 0, 0, 0, 0];
 			};
 		};
 		if ( !server[ currentDB.db3 ] && currentDB.db3 != "ignore" ) {
 			server[ currentDB.db3 ] = {};
-			for ( let i = 0; i < Object.keys( task_list ).length; i++ ) {
+			for ( let i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {
 				if ( Object.keys( task_list)[ i ] == "nextId" ) { continue };
 				server[ currentDB.db3 ][ Object.keys( task_list)[ i ] ] = [0, 0, 0, 0, 0, 0, 0];
 			};
 		};
 		if ( !server[ currentDB.db4 ] && currentDB.db4 != "ignore" ) {
 			server[ currentDB.db4 ] = {};
-			for ( let i = 0; i < Object.keys( task_list ).length; i++ ) {
+			for ( let i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {
 				if ( Object.keys( task_list)[ i ] == "nextId" ) { continue };
 				server[ currentDB.db4 ][ Object.keys( task_list)[ i ] ] = [0, 0, 0, 0, 0, 0, 0];
 			};
 		};
 	}
-	
+
 	displayToolBarDateHeadings();
 	displayGraphTaskListUl();
 	displayGraphGrid();
