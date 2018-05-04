@@ -18,15 +18,15 @@ let graphGrid = document.getElementById("graphGrid");
 let addPersonBtn = document.getElementById("addPersonBtn");
 let addPersonInput = document.getElementById("addPersonInput");
 addPersonBtn.addEventListener( "click", addPerson );
-addPersonInput.addEventListener( "keypress", function ( e ){
+addPersonInput.addEventListener( "keypress", function ( e ) {
   if ( e.keyCode == 13) { addPerson(); }
-  }
-);
-function addPerson(){
+});
+
+function addPerson () {
   let addPersonInputVal = document.getElementById("addPersonInput").value;
   let myRegex = /([^a-zA-Z]*)([a-zA-Z]+) +([a-zA-Z]+)(\-[a-zA-Z]+)*([^a-zA-Z]*)$/;
   let match = myRegex.exec( addPersonInputVal );
-  if ( match != null  && match[1]=="" && match[2].length > 0 && match[3].length > 0 && match[5]==""){
+  if ( match != null  && match[1]=="" && match[2].length > 0 && match[3].length > 0 && match[5]=="") {
     let firstName = match[ 2 ];
     let lastName = match[ 3 ];
     let lastNameDoublePart = match[ 4 ];
@@ -49,10 +49,10 @@ function addPerson(){
 
 //load Personel info ;; persons{} -> removePersonSelect
 let removePersonSelect = document.getElementById( "removePersonSelect" );
-function loadPersonSelect(){
+function loadPersonSelect () {
   removePersonSelect.innerHTML = ""; // clearing select before appending new content;
   for ( let i = 0, j = Object.keys( persons ).length; i < j; i++ ) {
-    if ( Object.keys( persons )[ i ] == "nextId" ){ continue; };
+    if ( Object.keys( persons )[ i ] == "nextId" ) { continue; };
     let newElem = document.createElement("option");
     let id = Object.keys( persons )[ i ]; // persons ID;
     newElem.text = persons[ id ].fname + " " + persons[ id ].lname;
@@ -64,7 +64,7 @@ function loadPersonSelect(){
 
 // remove Personel ;; removePersonBtn -delete-> persons{};
 removePersonBtn = document.getElementById("removePersonBtn");
-removePersonBtn.addEventListener("click", function(){
+removePersonBtn.addEventListener("click", function () {
   for ( i = 0, j = Object.keys( task_list ).length; i < j; i++ ) {	// removing removed person from all task_list.[task_id].assignment;;
     if ( Object.keys( task_list )[ i ] == "nextId" ) {
       continue
@@ -81,7 +81,7 @@ removePersonBtn.addEventListener("click", function(){
 });
 
 // loading colors ;; colorsLst -> colorSelect.
-function displayColorsSelect(){
+function displayColorsSelect () {
   let colorsSelect = document.getElementById( "colorsSelect" );
   let newElemDel = document.createElement( "div" ); // DELETE color;;
   newElemDel.className = "colorsBtn";
@@ -91,7 +91,7 @@ function displayColorsSelect(){
   let newElemImgDel = document.createElement( "img" );
   newElemImgDel.setAttribute( "src", "img/TrashBinT.png" );
   newElemDel.appendChild( newElemImgDel );
-  newElemDel.addEventListener( "click", function() {
+  newElemDel.addEventListener( "click", function () {
     document.getElementById( `colorS${currentColor}` ).classList.remove( "colorsBtnSelected" );
     newElemDel.classList.add( "colorsBtnSelected" );
     graphGrid.classList.add( "pointerCursor" );
@@ -109,7 +109,7 @@ function displayColorsSelect(){
     newElem.setAttribute( "id", `colorS${i}` );
     newElem.style.left = ( i * 40 + 20 ) +"px";
     newElem.style.backgroundColor = colorsLst[ i ];
-    newElem.addEventListener( "click", function(){
+    newElem.addEventListener( "click", function () {
       document.getElementById( "colorS" + currentColor ).classList.remove( "colorsBtnSelected" );
       newElem.classList.add( "colorsBtnSelected" );
       graphGrid.classList.add( "pointerCursor" );
@@ -131,7 +131,7 @@ function displayColorsSelect(){
   let newElemImgStop = document.createElement( "img" );
   newElemImgStop.setAttribute( "src", "img/StopEditT.png" );
   newElemStop.appendChild( newElemImgStop );
-  newElemStop.addEventListener( "click", function(){
+  newElemStop.addEventListener( "click", function () {
     document.getElementById( `colorS${currentColor}`).classList.remove( "colorsBtnSelected" );
     newElemStop.classList.add( "colorsBtnSelected" );
     graphGrid.classList.remove( "pointerCursor" );
@@ -149,19 +149,19 @@ function displayColorsSelect(){
 // Add Task;;
 let toolBarAddTaskBtn = document.getElementById( "toolBarAddTaskBtn" );
 toolBarAddTaskBtn.addEventListener( "click", openToolBarAddTaskConsole );
-function openToolBarAddTaskConsole() {
-  if ( toolBarAddTaskBtn.textContent == "Edit tasks" ){
-    toolBarAddTaskBtn.textContent = "Close edit"
+function openToolBarAddTaskConsole () {
+  if ( toolBarAddTaskBtn.textContent == "Edit tasks" ) {
+    toolBarAddTaskBtn.textContent = "Close edit";
     displayGraphTaskListUl();
   } else {
-    toolBarAddTaskBtn.textContent = "Edit tasks" 
+    toolBarAddTaskBtn.textContent = "Edit tasks";
     displayGraphTaskListUl();
   }
 };
 
 // Search/Filter input;;
 let toolBarTaskSearchInput = document.getElementById( "toolBarTaskSearchInput" );
-toolBarTaskSearchInput.addEventListener( "keyup", function(){
+toolBarTaskSearchInput.addEventListener( "keyup", function () {
   displayGraphTaskListUl();
   displayGraphGrid();
 });
@@ -230,7 +230,7 @@ let selectedYear = document.getElementById( "selectedYear" );
 let selectedMonth = document.getElementById( "selectedMonth" );
 let selectedWeek = document.getElementById( "selectedWeek" );
 
-function getFirstWeekStart( year ) {
+function getFirstWeekStart ( year ) {
   let yearFullDate = new Date( year, 0, 1) ;
   let firstDayOfYear = yearFullDate.getDay();
   let firstWeekStart = yearFullDate;
@@ -272,7 +272,7 @@ for ( let i = 0; i < monthsNames.length; i++) {
   docfrag.appendChild( newElemOption );
 };
 selectedMonth.appendChild( docfrag );
-selectedMonth.addEventListener( "change", function(){
+selectedMonth.addEventListener( "change", function () {
   let yearFirstWeek = getFirstWeekStart( selectedYear.value );
   let dateFromSelect = new Date( selectedYear.value, selectedMonth.value );
 
@@ -284,7 +284,7 @@ selectedMonth.addEventListener( "change", function(){
   changeDB();
 });
 
-function calculateMonthFromWeeks() {
+function calculateMonthFromWeeks () {
   let yearFirstWeek = getFirstWeekStart( selectedYear.value );
 // calculating first day of selectedWeek;;
   let dateFromSelect = new Date(  yearFirstWeek.getFullYear(), yearFirstWeek.getMonth(), ( yearFirstWeek.getDate() + 7 * selectedWeek.value - 7 )  );
@@ -304,7 +304,7 @@ function calculateMonthFromWeeks() {
 
 //number of Weeks;;
   // checking number of weeks in year;;
-function calculateWeeks() {
+function calculateWeeks () {
   selectedWeek.innerHTML = "";
   let yearFirstWeek = getFirstWeekStart( selectedYear.value );
   let nextYearFirstWeek = getFirstWeekStart( parseInt( parseInt(selectedYear.value) + 1) );
@@ -329,7 +329,7 @@ function calculateWeeks() {
   };
   selectedWeek.appendChild( docfrag );
   // listener change selectMonth based on change to selectWeek;;
-  selectedWeek.addEventListener( "change", function(){
+  selectedWeek.addEventListener( "change", function () {
     calculateMonthFromWeeks();
     // selectWeek blur() on change;;
     selectedWeek.blur();
@@ -338,7 +338,7 @@ function calculateWeeks() {
 }
 
 let toolBarDateHeadings = document.getElementById("toolBarDateHeadings");
-function displayToolBarDateHeadings() {
+function displayToolBarDateHeadings () {
   toolBarDateHeadings.innerHTML = "";
   if ( toolBarDateRangeSwitchBtn.value == "1W" ) {
     for ( let i = 0; i < 7; i++ ) {
@@ -396,7 +396,7 @@ function displayToolBarDateHeadings() {
 // GRAPH ZONE ;;
 // loading task-list items;; server[ currentDB.db1 ][] -> graphTaskListUl
 let graphTaskListUl = document.getElementById("graphTaskListUl");
-function displayGraphTaskListUl(){
+function displayGraphTaskListUl () {
   while (graphTaskListUl.hasChildNodes()) {
     graphTaskListUl.removeChild(graphTaskListUl.lastChild);
   }
@@ -412,7 +412,7 @@ function displayGraphTaskListUl(){
         newElemTaskListBtn.classList.add( "graphTaskListBtn", "btn" );
         newElemTaskListBtn.setAttribute( "id", btnID );
         newElemTaskListBtn.textContent = task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].assignment.length;
-        newElemTaskListBtn.addEventListener("click", function( event ) {
+        newElemTaskListBtn.addEventListener("click", function ( event ) {
           if ( newElemTaskListBtn.value == "X" ) {
             displayGraphTaskListUl();
           } else{
@@ -446,7 +446,7 @@ function displayGraphTaskListUl(){
         newElemTaskListBtn.setAttribute( "id", btnID );
         newElemTaskListBtn.textContent = "DEL";
         newElemTaskListBtn.style.backgroundColor = 'red';
-        newElemTaskListBtn.addEventListener("click", function( event ) {
+        newElemTaskListBtn.addEventListener("click", function ( event ) {
           //make delete on whole DB && task_list;; #delDB
           let taskIdToDelete = Object.keys( server[ currentDB.db1 ] )[ i ] ;
           for ( let i = 0, j = Object.keys( server ).length; i < j; i++ ) {
@@ -463,7 +463,7 @@ function displayGraphTaskListUl(){
         let newElemTaskList_li_input = document.createElement( "input" );
         newElemTaskList_li_input.value = task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name;
         newElemTaskList_li_input.className = "graphTaskList_li_input";
-        newElemTaskList_li_input.addEventListener( "change", function(){ //saving renames;;
+        newElemTaskList_li_input.addEventListener( "change", function () { //saving renames;;
           task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name = newElemTaskList_li_input.value;
         });
 
@@ -481,7 +481,7 @@ function displayGraphTaskListUl(){
     newElemTaskListBtn.setAttribute( "id", btnID );
     newElemTaskListBtn.textContent = "ADD";
     newElemTaskListBtn.style.backgroundColor = 'lightgreen';
-    newElemTaskListBtn.addEventListener("click", function( event ) {
+    newElemTaskListBtn.addEventListener("click", function ( event ) {
       let isNameProper = "yes";
       if ( newElemTaskList_li_input.value == "" ) {
         isNameProper = "no";
@@ -522,7 +522,7 @@ function displayGraphTaskListUl(){
 };
 
 // ADD/ REMOVE persons Zone;;
-function openGraphTaskListPersonZone( btnID, taskID ) {
+function openGraphTaskListPersonZone ( btnID, taskID ) {
   document.getElementById( btnID ).innerHTML = "X"; // clearing all before creating new; X for onclick=close; 
   document.getElementById( btnID ).value = "X";
   let newElemZone = document.createElement( "div" );
@@ -555,7 +555,7 @@ function openGraphTaskListPersonZone( btnID, taskID ) {
   }
   sortedTask_listAssignment.sort();
   let regEx = /(.*) (.*) (.*)/;
-  for ( let i = 0, j = task_list[ taskID ].assignment.length; i < j; i++ ){
+  for ( let i = 0, j = task_list[ taskID ].assignment.length; i < j; i++ ) {
     let match = regEx.exec( sortedTask_listAssignment[ i ] );
 
     let newElemLi = document.createElement( "li" );
@@ -623,7 +623,7 @@ function openGraphTaskListPersonZone( btnID, taskID ) {
 // Creating graph grid divs + 'drawing' bars
 //let graphGrid = document.getElementById("graphGrid"); // initialized at start 'cos of use in colorsSelector - cursorPointer
 
-function displayGraphGrid() {
+function displayGraphGrid () {
   document.getElementById( "graphGrid" ).innerHTML = "";
   let toolBarTaskSearchInput_value = document.getElementById( "toolBarTaskSearchInput" ).value;	
   let rowMatchingSearch = 0;
@@ -649,7 +649,7 @@ function displayGraphGrid() {
           grid.style.left = col * gridWidth + "px";
           grid.style.top = rowMatchingSearch * gridHeight + "px"; //grid.setup.end;;
 
-          grid.addEventListener("click", function (){ // grid listener to manipulate bar.child
+          grid.addEventListener("click", function () { // grid listener to manipulate bar.child
             if ( currentColor == "x" ) { //skip
             } else if ( currentColor == 0 ) { // when selected color is 0 == clear
               server[ currentDB.db1 ][rowPos ][col] = 0;
@@ -670,7 +670,7 @@ function displayGraphGrid() {
   /* 4W loop: for every 'task_list{taskID{task_name} }', loop for every week database (x4) 'curentDB{DBname}',
   and loop 7 days in each week (display grid+bar) + color from 'server{DBname{taskID[for_day_color_number]} }; */
   if ( toolBarDateRangeSwitchBtn.value == "4W" ) {
-    for ( let row = 0, i = Object.keys( server[ currentDB.db1 ] ).length; row < i; row++ ){ // loop on task names;;
+    for ( let row = 0, i = Object.keys( server[ currentDB.db1 ] ).length; row < i; row++ ) { // loop on task names;;
       if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ row ] ].task_name.toLowerCase()
           .indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
         for ( let DBnbr = 1; DBnbr <= 4; DBnbr ++ ) { // loop over 4 weeks; currentDB{} names;;
@@ -693,7 +693,7 @@ function displayGraphGrid() {
             grid.style.left = (gridWidth / 4) * 7 * (DBnbr - 1) + col * (gridWidth / 4) + "px";
             grid.style.top = rowMatchingSearch * gridHeight + "px";
 
-            grid.addEventListener("click", function (){ // grid listener to manipulate child( 'bar' )
+            grid.addEventListener("click", function () { // grid listener to manipulate child( 'bar' )
               if ( currentColor == "x" ) { // if selected color is x == ignore color changes input == skip
               } else if ( currentColor == 0 ) { // when selected color is 0 == clear / delete
                 server[ currentDB[ `db${DBnbr}` ] ][rowPos ][col] = 0;
@@ -703,7 +703,7 @@ function displayGraphGrid() {
                 document.getElementById(`posBar_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}`).className = "bar4W";
                 document.getElementById(`posBar_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}`).style.backgroundColor = colorsLst[ currentColor ];
               }
-              displayGraphGrid();
+              //displayGraphGrid();
             }); // end listener
           graphGrid.appendChild( grid ); // adding grid>bar to graph zone		
           } // end 7 day loop
@@ -719,7 +719,7 @@ function displayGraphGrid() {
 // GLOBALS;;
 // changing Data Base + if DB don't exist create new 0-ed;;
 // DB naming convention: server."wgantt" + year + "w" + week_number :: server.wgant2018w36;;
-function changeDB() {
+function changeDB () {
   currentDB.db1 = `wgantt${selectedYear.value}w${selectedWeek.value}`;
   if ( !server[ currentDB.db1 ] ) {
     server[ currentDB.db1 ] = {};
@@ -737,7 +737,7 @@ function changeDB() {
       if ( sWeekValue + i <= sWeekLastChildValue ){
         currentDB[ `db${i + 1}` ] = `wgantt${selectedYear.value}w${sWeekValue + i}`;
       } else if ( sWeekValue + i > sWeekLastChildValue &&
-      selectedYear.value < parseInt(selectedYear.lastChild.value)){
+          selectedYear.value < parseInt(selectedYear.lastChild.value)){
         currentDB[ `db${i + 1}`] = `wgantt${parseInt(selectedYear.value) + 1}w${i - difference}`;
       } else {
         currentDB[ `db${i + 1}` ] = 'ignore';
