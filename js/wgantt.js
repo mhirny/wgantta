@@ -60,7 +60,6 @@ function loadPersonSelect(){
   }
   removePersonSelect.appendChild( docfrag );
 };
-loadPersonSelect(); // startup load;
 
 // remove Personel ;; removePersonBtn -delete-> persons{};
 removePersonBtn = document.getElementById("removePersonBtn");
@@ -144,7 +143,6 @@ function displayColorsSelect(){
   colorsSelect.appendChild( newElemStop );
     
 };
-displayColorsSelect(); // on-start display;;
 
 // TOOL BAR ;;
 // Add Task;;
@@ -341,8 +339,6 @@ function calculateWeeks() {
     changeDB();
   });
 }
-  //on start calculate weeks;;
-calculateWeeks();
 
 let toolBarDateHeadings = document.getElementById("toolBarDateHeadings");
 function displayToolBarDateHeadings() {
@@ -399,7 +395,6 @@ function displayToolBarDateHeadings() {
   }
   toolBarDateHeadings.appendChild( docfrag );
 };
-displayToolBarDateHeadings();
 
 // GRAPH ZONE ;;
 // loading task-list items;; server[ currentDB.db1 ][] -> graphTaskListUl
@@ -528,7 +523,6 @@ function displayGraphTaskListUl(){
     graphTaskListUl.appendChild( newElemTaskList_li );
   }
 };
-displayGraphTaskListUl(); // startup load;
 
 // ADD/ REMOVE persons Zone;;
 function openGraphTaskListPersonZone( btnID, taskID ) {
@@ -723,8 +717,6 @@ function displayGraphGrid() {
   } // end of if 4W test;;
 
 }
-//on start displayGraphGrid;;
-displayGraphGrid();
 
 // GLOBALS;;
 // changing Data Base + if DB don't exist create new 0-ed;;
@@ -783,6 +775,17 @@ function changeDB() {
   displayGraphGrid();
 }
 
+(function init () {
+
+loadPersonSelect(); // startup load;
+  displayColorsSelect(); // on-start display;;
+    //on start calculate weeks;;
+calculateWeeks();
+  displayToolBarDateHeadings();
+  displayGraphTaskListUl(); // startup load;
+  //on start displayGraphGrid;;
+displayGraphGrid();
+})();
 //console.log( document.defaultView.getComputedStyle( grid, null ).getPropertyValue("width")  );
 /*
 let zzz = "poz_zadanie1_2";
