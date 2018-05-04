@@ -7,7 +7,8 @@ let currentDB = {
 let colorsLst = [ "Yellow", "Blue", "Gray", "Orange", "Red" ];
 let currentColor = 1;
 
-let gridWidth = 100, gridHeight = 40;
+let gridWidth = 100;
+let gridHeight = 40;
 let docfrag = new DocumentFragment();
 
 let graphGrid = document.getElementById("graphGrid");
@@ -31,7 +32,7 @@ function addPerson(){
     let lastNameDoublePart = match[ 4 ];
     firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
     lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
-    if ( lastNameDoublePart > "" ){
+    if ( lastNameDoublePart !== undefined ){
       lastName += "-" + lastNameDoublePart.charAt(1).toUpperCase() + lastNameDoublePart.slice(2).toLowerCase();
     };
     persons[ "personID_" + persons.nextId ] = {};
@@ -41,7 +42,7 @@ function addPerson(){
     document.getElementById("addPersonInput").value = ""; // clearing input field after successful add;
     loadPersonSelect();
     displayGraphTaskListUl();
-  } else { 
+  } else {
     alert("Wrong Name!");
   };
 };
@@ -121,7 +122,7 @@ function displayColorsSelect(){
     docfrag.appendChild( newElem );
   }
   colorsSelect.appendChild( docfrag );
-    
+
   let newElemStop = document.createElement( "div" ); // STOP color;;
   newElemStop.className = "colorsBtn";
   newElemStop.setAttribute( "id", "colorSx" );
@@ -141,7 +142,7 @@ function displayColorsSelect(){
     graphGrid.classList.remove( "pointerCursor" );
   }
   colorsSelect.appendChild( newElemStop );
-    
+
 };
 
 // TOOL BAR ;;
@@ -175,19 +176,15 @@ toolBarDateRangeSwitchBtn.addEventListener( "click", function (){
     toolBarDateRangeSwitchBtn.value = "4W";
     toolBarDateRangeSwitch1W.className = "toolBarDateRangeSwitchTextSmall";
     toolBarDateRangeSwitch4W.className = "toolBarDateRangeSwitchTextBig";
-    gridWidth = 25; 
-    gridHeight = 40;
     changeDB();
   } else {
     toolBarDateRangeSwitchBtn.value = "1W";
     toolBarDateRangeSwitch1W.className = "toolBarDateRangeSwitchTextBig";
     toolBarDateRangeSwitch4W.className = "toolBarDateRangeSwitchTextSmall";
-    gridWidth = 100;
-    gridHeight = 40;
     changeDB();
   }
 });
-    
+
 //PREV. btn;;
 let toolBarPreviousBtn = document.getElementById("toolBarPreviousBtn");
 toolBarPreviousBtn.addEventListener( "click", function () {
@@ -227,7 +224,7 @@ toolBarNextBtn.addEventListener( "click", function () {
             changeDB();
   }
 });
-    
+
 // Date select load;;
 let selectedYear = document.getElementById( "selectedYear" );
 let selectedMonth = document.getElementById( "selectedMonth" );
@@ -278,7 +275,7 @@ selectedMonth.appendChild( docfrag );
 selectedMonth.addEventListener( "change", function(){
   let yearFirstWeek = getFirstWeekStart( selectedYear.value );
   let dateFromSelect = new Date( selectedYear.value, selectedMonth.value );
-    
+
   let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
   let diffDays = Math.round(Math.abs((dateFromSelect.getTime() - yearFirstWeek.getTime()) / (oneDay) ));
   let onChangeNewWeek = 1 + Math.round( diffDays / 7 );
@@ -348,7 +345,7 @@ function displayToolBarDateHeadings() {
       let newElemDiv = document.createElement("div");
       newElemDiv.className = "toolBarDateHeading1W";
       newElemDiv.style.left = i * gridWidth + "px";
-      
+
       let yearFromSelect = new Date( selectedYear.value, 0, 1) ;
       let firstDayOYear = yearFromSelect.getDay();
       let thisYearFirstWeekDay = yearFromSelect;
@@ -373,8 +370,8 @@ function displayToolBarDateHeadings() {
     for ( let i = 0; i < 28; i++ ) {
       let newElemDiv = document.createElement("div");
       newElemDiv.className = "toolBarDateHeading4W";
-      newElemDiv.style.left = i * gridWidth + "px";
-      
+      newElemDiv.style.left = i * (gridWidth / 4) + "px";
+
       let yearFromSelect = new Date( selectedYear.value, 0, 1) ;
       let firstDayOYear = yearFromSelect.getDay();
       let thisYearFirstWeekDay = yearFromSelect;
@@ -407,7 +404,7 @@ function displayGraphTaskListUl(){
   if ( toolBarAddTaskBtn.textContent == "Edit tasks" ) {
     let toolBarTaskSearchInput_value = document.getElementById( "toolBarTaskSearchInput" ).value;
     for ( let i = 0, j = Object.keys( server[ currentDB.db1 ] ).length; i < j; i++) {
-        
+
       if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name.toLowerCase()
           .indexOf( toolBarTaskSearchInput_value.toLowerCase() ) >=0  ) { // search check;;
         let btnID = Object.keys( server[ currentDB.db1 ] )[ i ] + "_btn";
@@ -469,7 +466,7 @@ function displayGraphTaskListUl(){
         newElemTaskList_li_input.addEventListener( "change", function(){ //saving renames;;
           task_list[ Object.keys( server[ currentDB.db1 ] )[ i ] ].task_name = newElemTaskList_li_input.value;
         });
-                
+
         newElemTaskList_li.appendChild ( newElemTaskList_li_input );
         newElemTaskList_li.appendChild( newElemTaskListBtn );
         docfrag.appendChild( newElemTaskList_li );
@@ -538,13 +535,13 @@ function openGraphTaskListPersonZone( btnID, taskID ) {
   graphTaskListPersonAddTitle.setAttribute( "id", "graphTaskListPersonAddTitle" );
   graphTaskListPersonAddTitle.textContent = "Available personel:"
   newElemZone.appendChild( graphTaskListPersonAddTitle );
-      
+
   let newElemRemoveZone = document.createElement( "div" );
   newElemRemoveZone.setAttribute( "id", "graphTaskListPersonRemove");
   let newElemUlRemove = document.createElement( "ul") ;
   newElemUlRemove.classList.add( "ulClear" );
   newElemUlRemove.setAttribute( "id", "PersonRemove_ul" );
-      
+
   let newElemAddZone = document.createElement("div");
   newElemAddZone.setAttribute( "id", "graphTaskListPersonAdd");
   let newElemUlAdd = document.createElement( "ul" );
@@ -560,7 +557,7 @@ function openGraphTaskListPersonZone( btnID, taskID ) {
   let regEx = /(.*) (.*) (.*)/;
   for ( let i = 0, j = task_list[ taskID ].assignment.length; i < j; i++ ){
     let match = regEx.exec( sortedTask_listAssignment[ i ] );
-    
+
     let newElemLi = document.createElement( "li" );
     newElemLi.textContent = `${match[2]} ${match[1]}`;
     newElemLi.classList.add( "graphTaskListPersonRemove_li" );
@@ -630,7 +627,7 @@ function displayGraphGrid() {
   document.getElementById( "graphGrid" ).innerHTML = "";
   let toolBarTaskSearchInput_value = document.getElementById( "toolBarTaskSearchInput" ).value;	
   let rowMatchingSearch = 0;
-  
+
   if ( toolBarDateRangeSwitchBtn.value == "1W" ) { // 1W drawing;;
     for ( let row = 0, i = Object.keys( server[ currentDB.db1 ] ).length; row < i; row++ ) { // loops task * 7 grid
       if ( task_list[ Object.keys( server[ currentDB.db1 ] )[ row ] ].task_name.toLowerCase()
@@ -692,7 +689,8 @@ function displayGraphGrid() {
 
             grid.setAttribute("id",`pos_${rowPos}_${parseInt( col + 7 * (DBnbr -1))}` );
             grid.className = "grid4W";
-            grid.style.left = gridWidth * 7 * (DBnbr - 1) + col * gridWidth + "px";
+            // grid.style.left == DBloop * 7days * gridWidth  +  CurrentDBday(= col) * gridWidth 
+            grid.style.left = (gridWidth / 4) * 7 * (DBnbr - 1) + col * (gridWidth / 4) + "px";
             grid.style.top = rowMatchingSearch * gridHeight + "px";
 
             grid.addEventListener("click", function (){ // grid listener to manipulate child( 'bar' )
@@ -783,17 +781,3 @@ function changeDB() {
   displayGraphTaskListUl();
   displayGraphGrid();
 })();
-//console.log( document.defaultView.getComputedStyle( grid, null ).getPropertyValue("width")  );
-/*
-let zzz = "poz_zadanie1_2";
-let myRegex = /.*_(.*)_(.*)$/;
-let match = myRegex.exec( zzz );
-console.log( match[1], match[2] );
-*/
-//let table = server.wgantt2018w36;
-
-//console.log( Object.keys( table )[0] ); // Object.keys( table ).length
-// myObj.hasOwnProperty('key')
-
-//delete table.zadanie10; // delete table['zadanie10'];
-//table.zadanie60 = [0, 1, 2, 3, 4, 0, 0];
