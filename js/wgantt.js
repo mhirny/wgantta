@@ -776,15 +776,12 @@ function changeDB() {
 }
 
 (function init () {
-
-loadPersonSelect(); // startup load;
-  displayColorsSelect(); // on-start display;;
-    //on start calculate weeks;;
-calculateWeeks();
+  loadPersonSelect();
+  displayColorsSelect();
+  calculateWeeks();
   displayToolBarDateHeadings();
-  displayGraphTaskListUl(); // startup load;
-  //on start displayGraphGrid;;
-displayGraphGrid();
+  displayGraphTaskListUl();
+  displayGraphGrid();
 })();
 //console.log( document.defaultView.getComputedStyle( grid, null ).getPropertyValue("width")  );
 /*
