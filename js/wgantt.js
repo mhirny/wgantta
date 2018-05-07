@@ -185,6 +185,10 @@ toolBarDateRangeSwitchBtn.addEventListener( "click", function (){
   }
 });
 
+let selectedYear = document.getElementById( "selectedYear" );
+let selectedMonth = document.getElementById( "selectedMonth" );
+let selectedWeek = document.getElementById( "selectedWeek" );
+
 //PREV. btn;;
 let toolBarPreviousBtn = document.getElementById("toolBarPreviousBtn");
 toolBarPreviousBtn.addEventListener( "click", function () {
@@ -226,9 +230,6 @@ toolBarNextBtn.addEventListener( "click", function () {
 });
 
 // Date select load;;
-let selectedYear = document.getElementById( "selectedYear" );
-let selectedMonth = document.getElementById( "selectedMonth" );
-let selectedWeek = document.getElementById( "selectedWeek" );
 
 function getFirstWeekStart ( year ) {
   let yearFullDate = new Date( year, 0, 1) ;
@@ -320,7 +321,7 @@ function calculateWeeks () {
   } else {
     alert(" Weeks in Year calculation Error! ");
   }
-  //// loading number of weeks -> selectedWeek;;
+  //// setting number of weeks -> selectedWeek;;
   for ( let i = 1; i <= numberOfWeeks; i++ ) {
     let newElemOption = document.createElement( "option" );
     newElemOption.value = i;
@@ -328,7 +329,7 @@ function calculateWeeks () {
     docfrag.appendChild( newElemOption );
   };
   selectedWeek.appendChild( docfrag );
-  // listener change selectMonth based on change to selectWeek;;
+  // listener: change selectMonth based on change to selectWeek;;
   selectedWeek.addEventListener( "change", function () {
     calculateMonthFromWeeks();
     // selectWeek blur() on change;;
