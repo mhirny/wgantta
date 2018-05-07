@@ -223,9 +223,9 @@ toolBarNextBtn.addEventListener( "click", function () {
       }
     }
   } else if ( parseInt(selectedWeek.value) < parseInt(selectedWeek.lastChild.value) ) {
-            selectedWeek.value = parseInt(selectedWeek.value) + 1;
-            calculateMonthFromWeeks();
-            changeDB();
+    selectedWeek.value = parseInt(selectedWeek.value) + 1;
+    calculateMonthFromWeeks();
+    changeDB();
   }
 });
 
